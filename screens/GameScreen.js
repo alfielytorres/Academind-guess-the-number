@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, FlatList } from "react-native";
+import { Text, View, StyleSheet, Alert, FlatList, Dimensions } from "react-native";
 import { useState, useEffect } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
@@ -26,9 +26,8 @@ function GameScreen({ userNumber, onGameOver }) {
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-
       onGameOver(gameRounds.length);
-      setGameRounds(null)
+      setGameRounds(null);
       minBoundary = 1;
       maxBoundary = 100;
     }
@@ -59,8 +58,7 @@ function GameScreen({ userNumber, onGameOver }) {
       currentGuess
     );
     setCurrentGuess(newRandomNumber);
-    setGameRounds((prev) => [ ...prev,newRandomNumber]);
-
+    setGameRounds((prev) => [...prev, newRandomNumber]);
   }
 
   return (
@@ -82,8 +80,15 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </Card>
         <FlatList
+          style={styles.list}
           data={gameRounds}
-          renderItem={(itemData) => <View  style={styles.itemContainer}><Text style={styles.text}>#{itemData.index+1} {itemData.item}</Text></View>}
+          renderItem={(itemData) => (
+            <View style={styles.itemContainer}>
+              <Text style={styles.text}>
+                #{itemData.index + 1} {itemData.item}
+              </Text>
+            </View>
+          )}
           keyExtractor={(item) => item}
         />
       </View>
@@ -92,16 +97,21 @@ function GameScreen({ userNumber, onGameOver }) {
 }
 
 export default GameScreen;
+const deviceWidth = Dimensions.get('window').width
+
 
 const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
   },
+  list: {
+
+  },
   text: {
-    color:'white'
+    color: "white",
   },
   itemContainer: {
-    marginTop: 8,
+    marginTop: deviceWidth <380? 16: 32,
     marginHorizontal: 24,
     padding: 16,
     backgroundColor: "#191414",
@@ -111,6 +121,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowRadius: 12,
     shadowOpacity: 0.25,
-  }
+  },
 });
-

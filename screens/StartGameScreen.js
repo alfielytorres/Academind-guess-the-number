@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Text, View, TextInput, StyleSheet, Alert } from "react-native";
+import { Text, View, TextInput, StyleSheet, Alert, Dimensions, useWindowDimensions} from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
+import Title from "../components/ui/Title";
 function StartGameScreen({onPickedNumber}) {
   const [enteredText, setEnteredText] = useState('');
 
@@ -26,6 +27,8 @@ function StartGameScreen({onPickedNumber}) {
   }
 
   return (
+    <View style={styles.container}>
+      <Title>Enter your number </Title>
     <Card>
       <TextInput
         style={styles.numberInput}
@@ -43,13 +46,18 @@ function StartGameScreen({onPickedNumber}) {
         </View>
       </View>
       </Card>
+      </View>
   );
 }
 
 export default StartGameScreen;
 
+const deviceWidth = Dimensions.get('window').width
+
 const styles = StyleSheet.create({
- 
+ container:{
+  marginTop: deviceWidth < 480? 64: 16,
+ },
   buttonsContainer: {
     flexDirection: "row",
   },
